@@ -14,4 +14,12 @@
     <string name="PL2303HXD_SetDTR">SetDTR</string>
     <string name="PL2303HXD_GetSN">GetSN</string>
     <string name="title_activity_singleUart">串口</string>
+    <string name="menu_title">医疗废弃物智能监控系统（推车模式）</string>
+    <string name="uart_label">串口</string>
+    <string name="menu_label">菜单</string>
+    <string name="main_label">main</string>
+    <string name="upload_label">上传</string>
+    <string name="recyclecart_label">回收车</string>
+    <string name="transferworkshop_label">回收车</string>
+    <string name="transfercar_label">回收车</string>
 </resources>

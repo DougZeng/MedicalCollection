@@ -19,9 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gopher.meidcalcollection.base.BaseActivity;
-import com.gopher.meidcalcollection.uart.UartConsts;
-import com.gopher.meidcalcollection.util.ToolAlert;
+import com.gopher.meidcalcollection.common.base.BaseActivity;
+import com.gopher.meidcalcollection.common.uart.UartConsts;
+import com.gopher.meidcalcollection.common.util.ToolAlert;
 
 import java.io.IOException;
 import java.util.Random;
@@ -608,6 +608,7 @@ public class SingleUartActivity extends BaseActivity {
 
         }
     };
+
 
     public class MyOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

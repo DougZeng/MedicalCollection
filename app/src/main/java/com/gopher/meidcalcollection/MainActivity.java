@@ -20,9 +20,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gopher.meidcalcollection.base.BaseActivity;
-import com.gopher.meidcalcollection.uart.UartConsts;
-import com.gopher.meidcalcollection.util.StrUtil;
+import com.gopher.meidcalcollection.common.base.BaseActivity;
+import com.gopher.meidcalcollection.common.uart.UartConsts;
+import com.gopher.meidcalcollection.common.util.StrUtil;
 
 import java.io.IOException;
 import java.util.Random;
@@ -68,8 +68,6 @@ public class MainActivity extends BaseActivity {
     private PL2303Driver.Parity mParity = PL2303Driver.Parity.NONE;
     private PL2303Driver.StopBits mStopBits = PL2303Driver.StopBits.S1;
     private PL2303Driver.FlowControl mFlowControl = PL2303Driver.FlowControl.OFF;
-
-
 
 
     private static final String NULL = null;
@@ -351,7 +349,7 @@ public class MainActivity extends BaseActivity {
                 //sbHex.append(temp);
                 sbHex.append((char) (rbuf[j] & 0x000000FF));
             }
-            String ascii = StrUtil.bytesToAscii(rbuf, 3,len-6);
+            String ascii = StrUtil.bytesToAscii(rbuf, 3, len - 6);
             etRead.setText(ascii);
             Toast.makeText(this, "len=" + len, Toast.LENGTH_SHORT).show();
             Toast.makeText(this, ascii, Toast.LENGTH_SHORT).show();
@@ -637,6 +635,8 @@ public class MainActivity extends BaseActivity {
 
         }//run()
     };//Runnable tLoop
+
+
 
     public class MyOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
