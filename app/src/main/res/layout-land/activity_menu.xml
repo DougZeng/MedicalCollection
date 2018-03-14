@@ -2,6 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".menu.MenuActivity"
     android:layout_height="match_parent">
 
     <TextView
@@ -10,11 +12,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="8dp"
-        android:textSize="28sp"
-        android:text="@string/menu_title" />
+        android:text="@string/menu_title"
+        android:textSize="28sp" />
 
     <Button
-        android:onClick="recycleCart"
+        android:id="@+id/button6"
         android:layout_width="158dp"
         android:layout_height="151dp"
         android:layout_marginBottom="8dp"
@@ -22,6 +24,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/btn0_selector"
+        android:onClick="recycleCart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.064"
@@ -29,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:onClick="transferWorkshop"
+        android:id="@+id/button5"
         android:layout_width="169dp"
         android:layout_height="155dp"
         android:layout_marginBottom="8dp"
@@ -37,13 +40,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/btn1_selector"
+        android:onClick="transferWorkshop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:onClick="transferCar"
+        android:id="@+id/button7"
         android:layout_width="144dp"
         android:layout_height="152dp"
         android:layout_marginBottom="8dp"
@@ -51,10 +55,29 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/btn2_selector"
+        android:onClick="transferCar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.908"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:onClick="set"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.985"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.973"
+        app:srcCompat="@drawable/ic_set" />
 
 </android.support.constraint.ConstraintLayout>

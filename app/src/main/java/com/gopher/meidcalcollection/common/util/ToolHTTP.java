@@ -2,7 +2,7 @@ package com.gopher.meidcalcollection.common.util;
 
 import android.content.Context;
 
-import com.gopher.meidcalcollection.common.MApp;
+import com.gopher.meidcalcollection.common.TotalApp;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
@@ -212,7 +212,7 @@ public abstract class ToolHTTP {
      * @return 网络是否连接
      */
     public static boolean checkNetwork() {
-        boolean isConnected = MApp.isNetworkReady();
+        boolean isConnected = TotalApp.isNetworkReady();
         if (isConnected) {
             return true;
         } else {

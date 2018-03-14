@@ -35,4 +35,9 @@ public class TransferWorkshop extends ScanBaseActivity {
     protected void getScanBarcode(String barcode) {
 
     }
+
+    @Override
+    protected void getUartWeight(String weight) {
+        
+    }
 }

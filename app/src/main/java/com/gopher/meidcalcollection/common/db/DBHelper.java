@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.gopher.meidcalcollection.common.MApp;
+import com.gopher.meidcalcollection.common.TotalApp;
 
 import java.io.File;
 
@@ -14,7 +14,7 @@ import java.io.File;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper instance;
-    static String path = new File(MApp.getExternalAppDir(),
+    static String path = new File(TotalApp.getExternalAppDir(),
             "databases" + File.separatorChar + DBConstant.DB_NAME)
             .getAbsolutePath();
 
@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (instance == null) {
             synchronized (DBHelper.class) {
                 if (instance == null) {
-                    instance = new DBHelper(MApp.gainContext(), path,
+                    instance = new DBHelper(TotalApp.gainContext(), path,
                             null, DBConstant.DB_VERSION);
                 }
             }

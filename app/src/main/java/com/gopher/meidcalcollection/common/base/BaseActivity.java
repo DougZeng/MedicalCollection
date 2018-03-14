@@ -1,7 +1,6 @@
 package com.gopher.meidcalcollection.common.base;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.gopher.meidcalcollection.common.MApp;
+import com.gopher.meidcalcollection.common.TotalApp;
 import com.gopher.meidcalcollection.R;
 import com.gopher.meidcalcollection.common.util.Operation;
-import com.gopher.meidcalcollection.common.util.ToolAlert;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.lang.ref.WeakReference;
@@ -134,8 +132,8 @@ public abstract class BaseActivity extends Activity implements IBaseActivity {
         super.onDestroy();
         Log.d(TAG, "BaseActivity-->onDestroy()");
         destroy();
-        MApp.removeTask(context);
-        RefWatcher refWatcher = MApp.getRefWatcher(this);
+        TotalApp.removeTask(context);
+        RefWatcher refWatcher = TotalApp.getRefWatcher(this);
         refWatcher.watch(this);
     }
 
@@ -182,22 +180,22 @@ public abstract class BaseActivity extends Activity implements IBaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        ToolAlert.dialog(getContext(), "", "确认退出系统吗？", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                MApp.getMApp().exit();
-            }
-        }, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        ToolAlert.dialog(this, "", "确认退出系统吗？", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                TotalApp.getMApp().exit();
+//            }
+//        }, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        }).show();
+//    }
 
-            }
-        }).show();
-//        ToolAlert.toastShort("onBackPressed");
-    }
 
     /**
      * 动画类型

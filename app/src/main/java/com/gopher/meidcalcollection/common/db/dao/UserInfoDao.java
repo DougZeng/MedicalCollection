@@ -3,7 +3,7 @@ package com.gopher.meidcalcollection.common.db.dao;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.gopher.meidcalcollection.common.MApp;
+import com.gopher.meidcalcollection.common.TotalApp;
 import com.gopher.meidcalcollection.common.db.DBConstant;
 import com.gopher.meidcalcollection.common.db.model.BaseDBModel;
 import com.gopher.meidcalcollection.common.db.model.UserInfoModel;
@@ -22,7 +22,7 @@ public class UserInfoDao {
      * 向表中添加一个数据
      */
     public long insert(UserInfoModel model) throws RuntimeException {
-        long id = MApp.getDataBase().insertOrThrow(DBConstant.USERINFO, null,
+        long id = TotalApp.getDataBase().insertOrThrow(DBConstant.USERINFO, null,
                 model.toContentValues());
         Log.e(TAG, "id = " + id);
 //        model.setId(String.valueOf(id));
@@ -34,17 +34,17 @@ public class UserInfoDao {
      */
     public void insert(List<BaseDBModel> models) throws RuntimeException {
         try {
-            MApp.getDataBase().beginTransaction();
+            TotalApp.getDataBase().beginTransaction();
             // 通过事务来设置插入操作
             for (int i = 0; i < models.size(); i++) {
                 insert((UserInfoModel) models.get(i));
             }
-            MApp.getDataBase().setTransactionSuccessful();
+            TotalApp.getDataBase().setTransactionSuccessful();
         } catch (Exception e) {
             // TODO: handle exception
             Log.e(TAG, e.toString());
         } finally {
-            MApp.getDataBase().endTransaction();
+            TotalApp.getDataBase().endTransaction();
         }
     }
 
@@ -56,7 +56,7 @@ public class UserInfoDao {
      * @throws RuntimeException
      */
 //    public int delete(UserInfoModel model) throws RuntimeException {
-//        return MApp.getDataBase().delete(DBConstant.USERINFO, "Id = ?",
+//        return TotalApp.getDataBase().delete(DBConstant.USERINFO, "Id = ?",
 //                new String[]{model.getId()});
 //    }
 
@@ -67,7 +67,7 @@ public class UserInfoDao {
      */
     public void delete(String cardCode) throws RuntimeException {
         String sql = "DELETE FROM " + DBConstant.USERINFO + " where cardCode='" + cardCode + "' ";
-        MApp.getDataBase().execSQL(sql);
+        TotalApp.getDataBase().execSQL(sql);
     }
 
     /**
@@ -77,7 +77,7 @@ public class UserInfoDao {
      */
     public void deleteAll() throws RuntimeException {
         String sql = "DELETE FROM " + DBConstant.USERINFO;
-        MApp.getDataBase().execSQL(sql);
+        TotalApp.getDataBase().execSQL(sql);
     }
 
     /**
@@ -91,7 +91,7 @@ public class UserInfoDao {
         String sql = "SELECT * FROM " + DBConstant.USERINFO;
         Cursor cur = null;
         try {
-            cur = MApp.getDataBase().rawQuery(sql, null);
+            cur = TotalApp.getDataBase().rawQuery(sql, null);
             models = new ArrayList<UserInfoModel>();
             for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
                 UserInfoModel model = new UserInfoModel();
@@ -117,7 +117,7 @@ public class UserInfoDao {
      * @throws RuntimeException
      */
     public int update(UserInfoModel model) throws RuntimeException {
-        return MApp.getDataBase().update(DBConstant.USERINFO, model.toContentValues(), "cardCode = ?",
+        return TotalApp.getDataBase().update(DBConstant.USERINFO, model.toContentValues(), "cardCode = ?",
                 new String[]{model.getCardCode()});
     }
 
@@ -126,7 +126,7 @@ public class UserInfoDao {
         String sql = "SELECT * FROM " + DBConstant.USERINFO + " WHERE cardCode = ?";
         Cursor cur = null;
         try {
-            cur = MApp.getDataBase().rawQuery(sql, new String[]{card_code});
+            cur = TotalApp.getDataBase().rawQuery(sql, new String[]{card_code});
             if (cur.moveToFirst()) {
                 model = new UserInfoModel();
                 model.fillByCursor(cur);

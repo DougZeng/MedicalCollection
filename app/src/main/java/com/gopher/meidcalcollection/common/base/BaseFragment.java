@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gopher.meidcalcollection.common.MApp;
+import com.gopher.meidcalcollection.common.TotalApp;
 import com.gopher.meidcalcollection.common.util.Operation;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -114,7 +114,7 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
     public void onDestroy() {
         Log.d(TAG, "BaseFragment-->onDestroy()");
         super.onDestroy();
-        RefWatcher refWatcher = MApp.getRefWatcher(getActivity());
+        RefWatcher refWatcher = TotalApp.getRefWatcher(getActivity());
         refWatcher.watch(this);
     }
 

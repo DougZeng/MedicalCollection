@@ -43,14 +43,14 @@ import java.util.concurrent.Future;
  * Created by Administrator on 2017/11/17.
  */
 
-public class MApp extends App {
+public class TotalApp extends App {
     protected static File externalAppDir;// 该应用程序在SD卡上文件根目录
     // 数据库实例
     private static SQLiteDatabase database;
-    private static MApp mApp;
+    private static TotalApp totalApp;
 
     public static RefWatcher getRefWatcher(Context context) {
-        MApp application = (MApp) context.getApplicationContext();
+        TotalApp application = (TotalApp) context.getApplicationContext();
         return application.refWatcher;
     }
 
@@ -60,7 +60,7 @@ public class MApp extends App {
     @Override
     public void onCreate() {
         super.onCreate();
-        mApp=this;
+        totalApp =this;
         refWatcher = LeakCanary.install(this);
 
         try {
@@ -76,7 +76,7 @@ public class MApp extends App {
 
 
         getDataBase();
-//        getData();
+        getData();
 
 //        testUpload();
         saveConfig();
@@ -247,8 +247,8 @@ public class MApp extends App {
         return externalAppDir;
     }
 
-    public static MApp getMApp(){
-        return mApp;
+    public static TotalApp getMApp(){
+        return totalApp;
     }
 
     @Override
