@@ -2,7 +2,6 @@ package com.gopher.meidcalcollection.common.base;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.view.WindowManager;
 import com.gopher.meidcalcollection.common.TotalApp;
 import com.gopher.meidcalcollection.R;
 import com.gopher.meidcalcollection.common.util.Operation;
+import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.lang.ref.WeakReference;
@@ -20,7 +20,6 @@ import java.lang.ref.WeakReference;
  */
 
 public abstract class BaseActivity extends Activity implements IBaseActivity {
-    private static final String TAG = BaseActivity.class.getSimpleName();
     /**
      * 是否运行截屏
      **/
@@ -47,7 +46,7 @@ public abstract class BaseActivity extends Activity implements IBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "BaseActivity-->onCreate()");
+        Logger.d( "BaseActivity-->onCreate()");
 
         //获取应用Application
         mApplication = (App) getApplicationContext();
@@ -99,38 +98,38 @@ public abstract class BaseActivity extends Activity implements IBaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(TAG, "BaseActivity-->onRestart()");
+        Logger.d("BaseActivity-->onRestart()");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "BaseActivity-->onStart()");
+        Logger.d("BaseActivity-->onStart()");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "BaseActivity-->onResume()");
+        Logger.d("BaseActivity-->onResume()");
         resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "BaseActivity-->onPause()");
+        Logger.d("BaseActivity-->onPause()");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "BaseActivity-->onStop()");
+        Logger.d( "BaseActivity-->onStop()");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "BaseActivity-->onDestroy()");
+        Logger.d("BaseActivity-->onDestroy()");
         destroy();
         TotalApp.removeTask(context);
         RefWatcher refWatcher = TotalApp.getRefWatcher(this);

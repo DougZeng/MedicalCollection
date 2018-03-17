@@ -5,17 +5,20 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.gopher.meidcalcollection.JobSchedulerService;
 import com.gopher.meidcalcollection.R;
+import com.gopher.meidcalcollection.common.UartService;
 import com.gopher.meidcalcollection.common.base.BaseActivity;
 import com.gopher.meidcalcollection.common.util.ToolAlert;
 import com.gopher.meidcalcollection.recyclecart.RecycleCart;
 import com.gopher.meidcalcollection.setting.SettingActivity;
 import com.gopher.meidcalcollection.transfercar.TransferCar;
 import com.gopher.meidcalcollection.transferworkshop.TransferWorkshop;
+
 
 /**
  * Created by Administrator on 2018/3/7.
@@ -42,7 +45,15 @@ public class MenuActivity extends BaseActivity {
 
     @Override
     public void doBusiness(Context mContext) {
+
+
 //        startJobSchedulerService();
+    }
+
+
+    private void startUartService() {
+        Intent uartIntent = new Intent(this, UartService.class);
+        startService(uartIntent);
     }
 
     @SuppressLint("NewApi")
@@ -62,7 +73,9 @@ public class MenuActivity extends BaseActivity {
 
     @Override
     public void resume() {
-
+        com.orhanobut.logger.Logger.d("time",System.currentTimeMillis()/1000);
+        startUartService();
+        com.orhanobut.logger.Logger.d("time",System.currentTimeMillis()/1000);
     }
 
     @SuppressLint("NewApi")

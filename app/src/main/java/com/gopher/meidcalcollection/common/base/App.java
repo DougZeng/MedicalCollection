@@ -3,11 +3,11 @@ package com.gopher.meidcalcollection.common.base;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import com.gopher.meidcalcollection.common.util.SysEnv;
 import com.gopher.meidcalcollection.common.util.ToolNetwork;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -32,7 +32,6 @@ public abstract class App extends Application {
     /**
      * 日志输出标志
      **/
-    protected final String TAG = this.getClass().getSimpleName();
 
     /**
      * 应用程序版本versionName
@@ -69,7 +68,7 @@ public abstract class App extends Application {
             deviceId = SysEnv.DEVICE_ID;
 
         } catch (Exception e) {
-            Log.e(TAG, "初始化设备ID、获取应用程序版本失败，原因：" + e.getMessage());
+            Logger.e("初始化设备ID、获取应用程序版本失败，原因：%s", e.getMessage());
         }
     }
 

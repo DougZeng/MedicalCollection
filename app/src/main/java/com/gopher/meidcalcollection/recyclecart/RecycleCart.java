@@ -1,19 +1,18 @@
 package com.gopher.meidcalcollection.recyclecart;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.gopher.meidcalcollection.R;
 import com.gopher.meidcalcollection.common.base.ScanBaseActivity;
 import com.gopher.meidcalcollection.common.util.ToolAlert;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by Administrator on 2018/3/10.
  */
 
 public class RecycleCart extends ScanBaseActivity {
-    private static final String TAG = "RecycleCart";
     @Override
     public int bindLayout() {
         return R.layout.activity_recyclecart;
@@ -40,7 +39,6 @@ public class RecycleCart extends ScanBaseActivity {
 
     @Override
     protected void getUartWeight(String weight) {
-        Log.i(TAG, "getUartWeight: "+weight);
-//        ToolAlert.toastShort(weight);
+        Logger.i("weight: %s", weight);
     }
 }

@@ -8,7 +8,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
-import android.util.Log;
+
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by Administrator on 2017/11/17.
@@ -18,7 +19,6 @@ public class ToolNetwork {
     public final static String NETWORK_CMNET = "CMNET";
     public final static String NETWORK_CMWAP = "CMWAP";
     public final static String NETWORK_WIFI = "WIFI";
-    public final static String TAG = "ToolNetwork";
     private static NetworkInfo networkInfo = null;
     private Context mContext = null;
 
@@ -106,9 +106,7 @@ public class ToolNetwork {
         if (isConnected()) {
             int type = networkInfo.getType();
             if (ConnectivityManager.TYPE_MOBILE == type) {
-                Log.i(TAG,
-                        "networkInfo.getExtraInfo()-->"
-                                + networkInfo.getExtraInfo());
+                Logger.i("networkInfo.getExtraInfo()--> %", networkInfo.getExtraInfo());
                 if (NETWORK_CMWAP.equals(networkInfo.getExtraInfo()
                         .toLowerCase())) {
                     return NETWORK_CMWAP;

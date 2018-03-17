@@ -1,7 +1,7 @@
 package com.gopher.meidcalcollection.common.util;
 
-import android.util.Log;
-
+import com.orhanobut.logger.Logger;
+import java.io.BufferedWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,6 @@ import java.net.UnknownHostException;
  */
 
 public class SocketApi implements NetworkRequestImpl {
-    private static final String TAG = SocketApi.class.getSimpleName();
     private Socket mScoketClient;
 
     public int checkNet(String serverIp, String iPort) {
@@ -28,10 +27,10 @@ public class SocketApi implements NetworkRequestImpl {
             InetSocketAddress isa = new InetSocketAddress(serverIp, Integer.parseInt(iPort));
             mScoketClient.connect(isa, 60000);
         } catch (UnknownHostException e) {
-            Log.e(TAG, e.toString());
+            Logger.e( e.toString());
             iRet = -1;
         } catch (IOException e) {
-            Log.e(TAG, e.toString());
+            Logger.e(e.toString());
             iRet = -2;
         }
         return iRet;
@@ -50,11 +49,11 @@ public class SocketApi implements NetworkRequestImpl {
             out.flush();
 
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Logger.e( e.toString());
             try {
                 mScoketClient.close();
             } catch (IOException e1) {
-                Log.e(TAG, e1.toString());
+                Logger.e(e1.toString());
             }
             iRet = -1;
         }
@@ -73,7 +72,6 @@ public class SocketApi implements NetworkRequestImpl {
             InputStream input = mScoketClient.getInputStream();
             int Recvlen = input.read(RecvBuff);
             if (Recvlen != -1) {
-                // Log.printLogHex("RecvDatas:", RecvBuff, Recvlen);
                 byte[] recvBuff = new byte[Recvlen];
                 System.arraycopy(RecvBuff, 0, recvBuff, 0, Recvlen);
                 return recvBuff;
@@ -82,7 +80,7 @@ public class SocketApi implements NetworkRequestImpl {
             }
 
         } catch (IOException e) {
-            Log.e(TAG, e.toString());
+            Logger.e( e.toString());
             return null;
         } finally {
             if (autoClose)
@@ -96,7 +94,7 @@ public class SocketApi implements NetworkRequestImpl {
             try {
                 mScoketClient.close();
             } catch (IOException e) {
-                Log.e(TAG, e.toString());
+                Logger.e(e.toString());
             }
             mScoketClient = null;
         }

@@ -1,6 +1,6 @@
 package com.gopher.meidcalcollection.common.util;
 
-import android.util.Log;
+import com.orhanobut.logger.Logger;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -14,7 +14,6 @@ import java.util.concurrent.Future;
 
 public class ToolSocket {
 
-    private static final String TAG = ToolSocket.class.getSimpleName();
     private static SocketApi socketApi;
     private static ToolSocket instance;
     private static ExecutorService threadPool;
@@ -47,7 +46,7 @@ public class ToolSocket {
                         int send = socketApi.send(sends);
                         if (send == 0) {
                             byte[] receive = socketApi.receive(autoClose);
-                            Log.i(TAG, "receive = " + receive);
+                            Logger.i("receive = %s", receive.toString());
                             return receive;
                         }
                     }

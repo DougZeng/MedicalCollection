@@ -1,6 +1,8 @@
 package com.gopher.meidcalcollection.common.util.async;
 import android.content.Context;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class CachedTask<Params, Progress, Result extends Serializable>
         extends SafeTask<Params, Progress, Result> {
-    private static final String TAG = CachedTask.class.getSimpleName();
     private static final String DEFAULT_PATH = "/cachedtask";
     private long expiredTime = 0;
     private static String cachePath;
@@ -71,11 +72,11 @@ public abstract class CachedTask<Params, Progress, Result extends Serializable>
             if (System.currentTimeMillis() - lastTime >= expiredTime) {
                 res = doConnectNetwork(params);
                 if (res != null) {
-                    if (Log.isPrint) Log.d(TAG, "doConnectNetwork: sucess");
+                    Logger.d("doConnectNetwork: sucess");
                     cachedTimeMap.put(key, System.currentTimeMillis());
                     saveResultToCache(res);
                 } else {
-                    if (Log.isPrint) Log.d(TAG, "doConnectNetwork: false");
+                    Logger.d("doConnectNetwork: false");
                     res = getResultFromCache();
                 }
             } else {
@@ -83,11 +84,11 @@ public abstract class CachedTask<Params, Progress, Result extends Serializable>
                 if (res == null) {
                     res = doConnectNetwork(params);
                     if (res != null) {
-                        if (Log.isPrint) Log.d(TAG, "doConnectNetwork: sucess");
+                        Logger.d("doConnectNetwork: sucess");
                         cachedTimeMap.put(key, System.currentTimeMillis());
                         saveResultToCache(res);
                     } else {
-                        if (Log.isPrint) Log.d(TAG, "doConnectNetwork: false");
+                        Logger.d( "doConnectNetwork: false");
                     }
                 }
             }
@@ -105,7 +106,7 @@ public abstract class CachedTask<Params, Progress, Result extends Serializable>
             Object obj = ois.readObject();
 
             if (obj != null) {
-                if (Log.isPrint) Log.i(TAG, key+ " read from cache: "+obj);
+                Logger.i( key+ " read from cache: "+obj);
                 return (Result) obj;
             }
         } catch (Exception e) {
@@ -117,7 +118,7 @@ public abstract class CachedTask<Params, Progress, Result extends Serializable>
                 e.printStackTrace();
             }
         }
-        if (Log.isPrint) Log.e(TAG, "read ResultFromCache: fail ");
+        Logger.e("read ResultFromCache: fail ");
         return null;
     }
 
@@ -128,7 +129,7 @@ public abstract class CachedTask<Params, Progress, Result extends Serializable>
             if (!dir.exists()) dir.mkdirs();
             oos = new ObjectOutputStream(new FileOutputStream(new File(dir, key)));
             oos.writeObject(res);
-            if (Log.isPrint) Log.i(TAG, key +"  saveto cache: "+res);
+            Logger.i(key +"  saveto cache: "+res);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,7 +140,7 @@ public abstract class CachedTask<Params, Progress, Result extends Serializable>
                 e.printStackTrace();
             }
         }
-        if (Log.isPrint) Log.e(TAG, "save Result To Cache: fail");
+        Logger.e( "save Result To Cache: fail");
         return false;
     }
 }

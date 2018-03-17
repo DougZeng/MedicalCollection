@@ -11,10 +11,10 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.gopher.meidcalcollection.common.base.App;
+import com.orhanobut.logger.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -27,7 +27,6 @@ import java.util.List;
 
 public final class SysEnv {
     /***Log输出标识**/
-    private static final String TAG = SysEnv.class.getSimpleName();
 
     /***屏幕显示材质**/
     private static final DisplayMetrics mDisplayMetrics = new DisplayMetrics();
@@ -112,7 +111,7 @@ public final class SysEnv {
         try {
             info = manager.getPackageInfo(context.getPackageName(), 0);
         } catch (Exception e) {
-            Log.e(TAG, "获取应用程序版本失败，原因：" + e.getMessage());
+            Logger.e("获取应用程序版本失败，原因：" + e.getMessage());
             return "";
         }
 
@@ -130,7 +129,7 @@ public final class SysEnv {
         try {
             info = manager.getPackageInfo(context.getPackageName(), 0);
         } catch (Exception e) {
-            Log.e(TAG, "获取应用程序版本失败，原因：" + e.getMessage());
+            Logger.e("获取应用程序版本失败，原因：" + e.getMessage());
             return -1;
         }
 
@@ -153,7 +152,7 @@ public final class SysEnv {
             strVersion = str2.split("\\s+")[2];//KernelVersion
 
         } catch (Exception e) {
-            Log.e(TAG, "获取系统内核版本失败，原因：" + e.getMessage());
+            Logger.e("获取系统内核版本失败，原因：" + e.getMessage());
         } finally {
             try {
                 mBufferedReader.close();
@@ -202,7 +201,8 @@ public final class SysEnv {
      */
     public static boolean isEmulator(Context mContext) {
         TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        String deviceID = telephonyManager.getDeviceId();
+        assert telephonyManager != null;
+        @SuppressLint("MissingPermission") String deviceID = telephonyManager.getDeviceId();
         // 如果 运行的 是一个 模拟器
         if (deviceID == null || deviceID.trim().length() == 0
                 || deviceID.matches("0+")) {

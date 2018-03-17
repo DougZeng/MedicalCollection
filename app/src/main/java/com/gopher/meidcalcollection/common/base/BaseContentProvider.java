@@ -7,8 +7,4 @@ import android.content.ContentProvider;
  */
 
 public abstract class BaseContentProvider extends ContentProvider {
-    /**
-     * 日志输出标志
-     **/
-    protected final String TAG = this.getClass().getSimpleName();
 }

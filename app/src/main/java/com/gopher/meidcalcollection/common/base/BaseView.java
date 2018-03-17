@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by Administrator on 2017/11/17.
@@ -60,10 +61,6 @@ public abstract class BaseView extends View {
      **/
     protected Context mContext;
 
-    /**
-     * 日志输出标志
-     **/
-    protected final String TAG = this.getClass().getSimpleName();
 
     public BaseView(Context context) {
         this(context, null);
@@ -98,7 +95,7 @@ public abstract class BaseView extends View {
     /**
      * 根据手机的分辨率从 dip 的单位 转成为 px(像素)
      *
-     * @param context 环境
+     * @param context  环境
      * @param dipValue 需要转化的dip值
      * @return int 转化后的px值
      */
@@ -179,7 +176,7 @@ public abstract class BaseView extends View {
             result = mContext.getResources().getIdentifier(resName, resType, packageName);
         } catch (Exception e) {
             result = -1;
-            Log.w(TAG, "获取资源文件失败，原因：" + e.getMessage());
+            Logger.w("获取资源文件失败，原因：%s", e.getMessage());
         }
 
         return result;

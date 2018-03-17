@@ -16,22 +16,15 @@ import com.gopher.meidcalcollection.common.util.ToolScanner;
 
 public abstract class ScanBaseActivity extends BaseActivity implements ToolScanner.OnScanSuccessListener, UartService.OnUartResultListener {
 
-    private static final String TAG = "ScanBaseActivity";
 
     private ToolScanner mToolScanner;
     private UartBroadCast uartBroadCast;
 
 
-    private void startUartService() {
-        Intent uartIntent = new Intent(this, UartService.class);
-        startService(uartIntent);
-    }
 
 
     @Override
     public void doBusiness(Context mContext) {
-        startUartService();
-
         mToolScanner = new ToolScanner(this);
         uartBroadCast = new UartBroadCast(this);
         IntentFilter filter = new IntentFilter(Config.UART_WEIGHT_ACTION);

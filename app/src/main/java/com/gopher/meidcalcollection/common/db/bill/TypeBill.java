@@ -1,10 +1,10 @@
 package com.gopher.meidcalcollection.common.db.bill;
 
-import android.util.Log;
 
 import com.gopher.meidcalcollection.common.db.dao.TypeDao;
 import com.gopher.meidcalcollection.common.db.model.BaseDBModel;
 import com.gopher.meidcalcollection.common.db.model.TypeModel;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -13,7 +13,6 @@ import java.util.List;
  */
 
 public class TypeBill {
-    public static final String TAG = TypeBill.class.getSimpleName();
     private static TypeBill instances;
     private TypeDao typeDao;
 
@@ -33,7 +32,7 @@ public class TypeBill {
         try {
             id = typeDao.insert(model);
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Logger.e( e.toString());
         }
         return id;
     }
@@ -45,7 +44,7 @@ public class TypeBill {
         try {
             typeDao.insert(model);
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Logger.e( e.toString());
             return false;
         }
         return true;
@@ -64,7 +63,7 @@ public class TypeBill {
         } catch (Exception e) {
             result = -1;
             // TODO 记录异常日志
-            Log.e(TAG, e.toString());
+            Logger.e( e.toString());
         }
         return result;
     }
@@ -82,7 +81,7 @@ public class TypeBill {
         } catch (Exception e) {
             result = -1;
             // TODO 记录异常日志
-            Log.e(TAG, e.toString());
+            Logger.e( e.toString());
         }
         return result;
     }
@@ -100,7 +99,7 @@ public class TypeBill {
 //        } catch (RuntimeException e) {
 //            // TODO 添加日志
 //            count = -1;
-//            Log.e(TAG, e.toString());
+//            Logger.e( e.toString());
 //        }
 //        return count;
 //    }
@@ -114,7 +113,7 @@ public class TypeBill {
         try {
             models = typeDao.findAll();
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Logger.e( e.toString());
         }
         return models;
     }

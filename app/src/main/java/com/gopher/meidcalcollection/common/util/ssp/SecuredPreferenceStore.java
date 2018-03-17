@@ -2,8 +2,7 @@ package com.gopher.meidcalcollection.common.util.ssp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-
+import com.orhanobut.logger.Logger;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -89,7 +88,7 @@ public class SecuredPreferenceStore implements SharedPreferences {
     private static SecuredPreferenceStore mInstance;
 
     private SecuredPreferenceStore(Context appContext) throws Exception {
-        Log.d("SECURE-PREFERENCE", "Creating store instance");
+        Logger.d("SECURE-PREFERENCE", "Creating store instance");
         mPrefs = appContext.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
 
         mEncryptionManager = new EncryptionManager(appContext, mPrefs, new KeyStoreRecoveryNotifier() {
@@ -132,7 +131,7 @@ public class SecuredPreferenceStore implements SharedPreferences {
                             RecoveryHandler recoveryHandler) throws Exception {
 
         if (mInstance != null) {
-            Log.w("SECURED-PREFERENCE", "init called when there already is a non-null instance of the class");
+            Logger.w("SECURED-PREFERENCE", "init called when there already is a non-null instance of the class");
             return;
         }
 

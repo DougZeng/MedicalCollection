@@ -23,10 +23,6 @@ public abstract class BaseMAdapter<T> extends android.widget.BaseAdapter {
      * 每一页显示条数
      **/
     private int mPerPageSize = 10;
-    /**
-     * 日志输出标志
-     **/
-    protected final String TAG = this.getClass().getSimpleName();
 
     public BaseMAdapter() {
         this(null);

@@ -1,9 +1,9 @@
 package com.gopher.meidcalcollection.common.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.gopher.meidcalcollection.common.base.App;
+import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Field;
 
@@ -12,7 +12,6 @@ import java.lang.reflect.Field;
  */
 
 public class ToolResource {
-    private static final String TAG = ToolResource.class.getName();
 
     private static Context mContext = App.gainContext();
 
@@ -41,7 +40,7 @@ public class ToolResource {
             CArray = Class.forName(mContext.getPackageName() + ".R$array");
 
         } catch (ClassNotFoundException e) {
-            Log.i(TAG, e.getMessage());
+            Logger.i(e.getMessage());
         }
     }
 
@@ -75,7 +74,7 @@ public class ToolResource {
 
     private static int getResId(Class<?> resClass, String resName) {
         if (resClass == null) {
-            Log.i(TAG, "getRes(null," + resName + ")");
+            Logger.e("getRes(null, %s )", resName);
             throw new IllegalArgumentException("ResClass is not initialized. Please make sure you have added neccessary resources. Also make sure you have " + mContext.getPackageName() + ".R$* configured in obfuscation. field=" + resName);
         }
 
@@ -83,9 +82,9 @@ public class ToolResource {
             Field field = resClass.getField(resName);
             return field.getInt(resName);
         } catch (Exception e) {
-            Log.i(TAG, "getRes(" + resClass.getName() + ", " + resName + ")");
-            Log.i(TAG, "Error getting resource. Make sure you have copied all resources (res/) from SDK to your project. ");
-            Log.i(TAG, e.getMessage());
+            Logger.e( "getRes(" + resClass.getName() + ", " + resName + ")");
+            Logger.e( "Error getting resource. Make sure you have copied all resources (res/) from SDK to your project. ");
+            Logger.e( e.getMessage());
         }
 
         return -1;

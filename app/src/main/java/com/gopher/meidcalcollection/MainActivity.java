@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.gopher.meidcalcollection.common.base.BaseActivity;
 import com.gopher.meidcalcollection.common.uart.UartConsts;
 import com.gopher.meidcalcollection.common.util.StrUtil;
+import com.gopher.meidcalcollection.common.util.ToolAlert;
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.util.Random;
@@ -30,15 +32,8 @@ import java.util.Random;
 import tw.com.prolific.driver.pl2303.PL2303Driver;
 
 public class MainActivity extends BaseActivity {
-
-
-    public static final String TAG = MainActivity.class.getSimpleName();
-
-    private static final boolean SHOW_DEBUG = true;
-
     private static final int DISP_CHAR = 0;
     private static final int LINEFEED_CODE_CRLF = 1;
-
     private static final int LINEFEED_CODE_LF = 2;
 
 
@@ -179,7 +174,7 @@ public class MainActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        Log.d(TAG, "Leave onCreate");
+        Logger.d("Leave onCreate");
     }
 
     @Override
@@ -191,16 +186,13 @@ public class MainActivity extends BaseActivity {
     public void resume() {
         String action = getIntent().getAction();
         if (!mSerial.isConnected()) {
-            if (SHOW_DEBUG) {
-                Log.d(TAG, "New instance : " + mSerial);
-            }
-
+            Logger.d("New instance : " + mSerial);
             if (!mSerial.enumerate()) {
 
                 Toast.makeText(this, "no more devices found", Toast.LENGTH_SHORT).show();
                 return;
             } else {
-                Log.d(TAG, "onResume:enumerate succeeded!");
+                Logger.d("onResume:enumerate succeeded!");
             }
             try {
                 Thread.sleep(1500);
@@ -224,51 +216,49 @@ public class MainActivity extends BaseActivity {
 
     public void onConfigurationChanged(Configuration newConfig) {
 
-        Log.d(TAG, "Enter onConfigurationChanged");
+        Logger.d("Enter onConfigurationChanged");
 
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
             Toast.makeText(this, "keyboard visible", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "keyboard visible");
+            Logger.d("keyboard visible");
         } else if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
             Toast.makeText(this, "keyboard hidden", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "keyboard hidden");
+            Logger.d("keyboard hidden");
         }
 
         if (newConfig.orientation == ActivityInfo.CONFIG_ORIENTATION) {
-            Log.d(TAG, "CONFIG_ORIENTATION");
+            Logger.d("CONFIG_ORIENTATION");
         }
 
         if (newConfig.keyboard == ActivityInfo.CONFIG_KEYBOARD) {
-            Log.d(TAG, "CONFIG_KEYBOARD");
+            Logger.d("CONFIG_KEYBOARD");
         }
 
         if (newConfig.keyboardHidden == ActivityInfo.CONFIG_KEYBOARD_HIDDEN) {
-            Log.d(TAG, "CONFIG_KEYBOARD_HIDDEN");
+            Logger.d("CONFIG_KEYBOARD_HIDDEN");
         }
 
 
-        Log.d(TAG, "Exit onConfigurationChanged");
+        Logger.d("Exit onConfigurationChanged");
 
     }
 
 
     private void openUsbSerial() {
-        Log.d(TAG, "Enter  openUsbSerial");
+        Logger.d("Enter  openUsbSerial");
 
         if (mSerial == null) {
 
-            Log.d(TAG, "No mSerial");
+            Logger.d("No mSerial");
             return;
 
         }
 
 
         if (mSerial.isConnected()) {
-            if (SHOW_DEBUG) {
-                Log.d(TAG, "openUsbSerial : isConnected ");
-            }
+            Logger.d("openUsbSerial : isConnected ");
             String str = PL2303HXD_BaudRate_spinner.getSelectedItem().toString();
             int baudRate = Integer.parseInt(str);
             switch (baudRate) {
@@ -285,7 +275,7 @@ public class MainActivity extends BaseActivity {
                     mBaudrate = PL2303Driver.BaudRate.B9600;
                     break;
             }
-            Log.d(TAG, "baudRate:" + baudRate);
+            Logger.d("baudRate:" + baudRate);
             // if (!mSerial.InitByBaudRate(mBaudrate)) {
             if (!mSerial.InitByBaudRate(mBaudrate, 700)) {
                 if (!mSerial.PL2303Device_IsHasPermission()) {
@@ -294,20 +284,20 @@ public class MainActivity extends BaseActivity {
 
                 if (mSerial.PL2303Device_IsHasPermission() && (!mSerial.PL2303Device_IsSupportChip())) {
                     Toast.makeText(this, "cannot open, maybe this chip has no support, please use PL2303HXD / RA / EA chip.", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "cannot open, maybe this chip has no support, please use PL2303HXD / RA / EA chip.");
+                    Logger.d("cannot open, maybe this chip has no support, please use PL2303HXD / RA / EA chip.");
                 }
             } else {
 
                 Toast.makeText(this, "connected : OK", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "connected : OK");
-                Log.d(TAG, "Exit  openUsbSerial");
+                Logger.d("connected : OK");
+                Logger.d("Exit  openUsbSerial");
 
 
             }
         }//isConnected
         else {
             Toast.makeText(this, "Connected failed, Please plug in PL2303 cable again!", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "connected failed, Please plug in PL2303 cable again!");
+            Logger.d("connected failed, Please plug in PL2303 cable again!");
 
 
         }
@@ -321,7 +311,7 @@ public class MainActivity extends BaseActivity {
         byte[] rbuf = new byte[20];
         StringBuffer sbHex = new StringBuffer();
 
-        Log.d(TAG, "Enter readDataFromSerial");
+        Logger.d("Enter readDataFromSerial");
 
         if (null == mSerial)
             return;
@@ -331,14 +321,12 @@ public class MainActivity extends BaseActivity {
 
         len = mSerial.read(rbuf);
         if (len < 0) {
-            Log.d(TAG, "Fail to bulkTransfer(read data)");
+            Logger.d("Fail to bulkTransfer(read data)");
             return;
         }
 
         if (len > 0) {
-            if (SHOW_DEBUG) {
-                Log.d(TAG, "read len : " + len);
-            }
+            Logger.d("read len : " + len);
             //rbuf[len] = 0;
             for (int j = 0; j < len; j++) {
                 //String temp=Integer.toHexString(rbuf[j]&0x000000FF);
@@ -354,9 +342,7 @@ public class MainActivity extends BaseActivity {
             Toast.makeText(this, "len=" + len, Toast.LENGTH_SHORT).show();
             Toast.makeText(this, ascii, Toast.LENGTH_SHORT).show();
         } else {
-            if (SHOW_DEBUG) {
-                Log.d(TAG, "read len : 0 ");
-            }
+            Logger.d("read len : 0 ");
             etRead.setText("empty");
             return;
         }
@@ -367,12 +353,12 @@ public class MainActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        Log.d(TAG, "Leave readDataFromSerial");
+        Logger.d("Leave readDataFromSerial");
     }//readDataFromSerial
 
     private void writeDataToSerial() {
 
-        Log.d(TAG, "Enter writeDataToSerial");
+        Logger.d("Enter writeDataToSerial");
 
         if (null == mSerial)
             return;
@@ -386,11 +372,11 @@ public class MainActivity extends BaseActivity {
            // strWrite = changeLinefeedcode(strWrite);
              strWrite="012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
              if (SHOW_DEBUG) {
-                Log.d(TAG, "PL2303Driver Write(" + strWrite.length() + ") : " + strWrite);
+                Logger.d(TAG, "PL2303Driver Write(" + strWrite.length() + ") : " + strWrite);
             }
             int res = mSerial.write(strWrite.getBytes(), strWrite.length());
     		if( res<0 ) {
-    			Log.d(TAG, "setup: fail to controlTransfer: "+ res);
+    			Logger.d(TAG, "setup: fail to controlTransfer: "+ res);
     			return;
     		}
 
@@ -398,25 +384,23 @@ public class MainActivity extends BaseActivity {
     		 */
         // test data: 600 byte
         //strWrite="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-        if (SHOW_DEBUG) {
-            Log.d(TAG, "PL2303Driver Write 2(" + strWrite.length() + ") : " + strWrite);
-        }
+        Logger.d("PL2303Driver Write 2(" + strWrite.length() + ") : " + strWrite);
         int res = mSerial.write(strWrite.getBytes(), strWrite.length());
         if (res < 0) {
-            Log.d(TAG, "setup2: fail to controlTransfer: " + res);
+            Logger.d("setup2: fail to controlTransfer: " + res);
             return;
         }
 
         Toast.makeText(this, "Write length: " + strWrite.length() + " bytes", Toast.LENGTH_SHORT).show();
 
-        Log.d(TAG, "Leave writeDataToSerial");
+        Logger.d("Leave writeDataToSerial");
     }//writeDataToSerial
 
 
     private void ShowPL2303HXD_SerialNmber() {
 
 
-        Log.d(TAG, "Enter ShowPL2303HXD_SerialNmber");
+        Logger.d("Enter ShowPL2303HXD_SerialNmber");
 
         if (null == mSerial)
             return;
@@ -432,7 +416,7 @@ public class MainActivity extends BaseActivity {
 
         }
 
-        Log.d(TAG, "Leave ShowPL2303HXD_SerialNmber");
+        Logger.d("Leave ShowPL2303HXD_SerialNmber");
     }//ShowPL2303HXD_SerialNmber
 
 
@@ -497,7 +481,7 @@ public class MainActivity extends BaseActivity {
         Message m = new Message();
         m.what = mmsg;
         myMessageHandler.sendMessage(m);
-        Log.d(TAG, String.format("Msg index: %04x", mmsg));
+        Logger.d(String.format("Msg index: %04x", mmsg));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -511,7 +495,7 @@ public class MainActivity extends BaseActivity {
         m.arg1 = value1;
         m.arg2 = value2;
         myMessageHandler.sendMessage(m);
-        Log.d(TAG, String.format("Msg index: %04x", mmsg));
+        Logger.d(String.format("Msg index: %04x", mmsg));
     }
 
     private Runnable tLoop = new Runnable() {
@@ -524,11 +508,11 @@ public class MainActivity extends BaseActivity {
             PL2303Driver.BaudRate mBRate[] = {PL2303Driver.BaudRate.B9600, PL2303Driver.BaudRate.B19200, PL2303Driver.BaudRate.B115200};
 
             if (null == mSerial) {
-                Log.d(TAG, "mSerial is Null");
+                Logger.d("mSerial is Null");
                 return;
             }
             if (!mSerial.isConnected()) {
-                Log.d(TAG, "mSerial <<-->>disconnect");
+                Logger.d("mSerial <<-->>disconnect");
                 return;
             }
 
@@ -543,17 +527,16 @@ public class MainActivity extends BaseActivity {
 
                 try {
                     if (null == mSerial) {
-                        Log.d(TAG, "mSerial is Null");
+                        Logger.d("mSerial is Null");
                         return;
                     }
                     if (!mSerial.isConnected()) {
-                        Log.d(TAG, "mSerial <<-->>disconnect");
+                        Logger.d("mSerial <<-->>disconnect");
                         return;
                     }
 
                     res = mSerial.setup(mBRate[WhichBR], mDataBits, mStopBits, mParity, mFlowControl);
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                     return;
                 }
@@ -561,7 +544,7 @@ public class MainActivity extends BaseActivity {
                 if (res < 0) {
                     Send_Notifier_Message(START_NOTIFIER);
                     Send_ERROR_Message(ERROR_BAUDRATE_SETUP, mBRateValue[WhichBR], 0);
-                    Log.d(TAG, "Fail to setup=" + res);
+                    Logger.d("Fail to setup= %d", res);
                     return;
                 }
                 Send_Notifier_Message(PROG_NOTIFIER_LARGE);
@@ -577,7 +560,7 @@ public class MainActivity extends BaseActivity {
                     len = mSerial.write(byteArray1, byteArray1.length);
                     if (len < 0) {
                         Send_ERROR_Message(ERROR_WRITE_DATA, mBRateValue[WhichBR], 0);
-                        Log.d(TAG, "Fail to write=" + len);
+                        Logger.d("Fail to write= %d", len);
                         return;
                     }
 
@@ -598,7 +581,7 @@ public class MainActivity extends BaseActivity {
                         Send_ERROR_Message(ERROR_READ_DATA, mBRateValue[WhichBR], 0);
                         return;
                     }
-                    Log.d(TAG, "read length=" + len + ";byteArray1 length=" + byteArray1.length);
+                    Logger.d("read length= %d  ;byteArray1 length= %d", len, byteArray1.length);
 
                     if (len != byteArray1.length) {
                         Send_ERROR_Message(ERROR_READ_LEN, mBRateValue[WhichBR], len);
@@ -609,8 +592,8 @@ public class MainActivity extends BaseActivity {
                     for (i = 0; i < len; i++) {
                         if (rbuf[i] != byteArray1[i]) {
                             Send_ERROR_Message(ERROR_COMPARE_DATA, rbuf[i], byteArray1[i]);
-                            Log.d(TAG, "Data is wrong at " +
-                                    String.format("rbuf[%d]=%02X,byteArray1[%d]=%02X", i, rbuf[i], i, byteArray1[i]));
+                            Logger.d("Data is wrong at rbuf[%d]=%02X,byteArray1[%d]=%02X", i, rbuf[i], i, byteArray1[i])
+                            ;
                             return;
                         }//if
                     }//for
@@ -637,7 +620,6 @@ public class MainActivity extends BaseActivity {
     };//Runnable tLoop
 
 
-
     public class MyOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -649,7 +631,7 @@ public class MainActivity extends BaseActivity {
 
             int baudRate = 0;
             String newBaudRate;
-            Toast.makeText(parent.getContext(), "newBaudRate is-" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
+            ToolAlert.toastShort("newBaudRate is-" + parent.getItemAtPosition(position).toString());
             newBaudRate = parent.getItemAtPosition(position).toString();
 
             try {
@@ -681,7 +663,7 @@ public class MainActivity extends BaseActivity {
             }
 
             if (res < 0) {
-                Log.d(TAG, "fail to setup");
+                Logger.d( "fail to setup");
                 return;
             }
         }

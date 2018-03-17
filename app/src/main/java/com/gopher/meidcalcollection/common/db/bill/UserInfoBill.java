@@ -1,10 +1,10 @@
 package com.gopher.meidcalcollection.common.db.bill;
 
-import android.util.Log;
 
 import com.gopher.meidcalcollection.common.db.dao.UserInfoDao;
 import com.gopher.meidcalcollection.common.db.model.BaseDBModel;
 import com.gopher.meidcalcollection.common.db.model.UserInfoModel;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -14,7 +14,6 @@ import java.util.List;
 
 public class UserInfoBill {
 
-    public static final String TAG = UserInfoBill.class.getSimpleName();
     private static UserInfoBill instance;
     private UserInfoDao userInfoDao;
 
@@ -35,7 +34,7 @@ public class UserInfoBill {
         try {
             id = userInfoDao.insert(model);
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Logger.e(e.toString());
         }
         return id;
     }
@@ -47,7 +46,7 @@ public class UserInfoBill {
         try {
             userInfoDao.insert(model);
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Logger.e(e.toString());
             return false;
         }
         return true;
@@ -66,7 +65,7 @@ public class UserInfoBill {
         } catch (Exception e) {
             result = -1;
             // TODO 记录异常日志
-            Log.e(TAG, e.toString());
+            Logger.e(e.toString());
         }
         return result;
     }
@@ -84,7 +83,7 @@ public class UserInfoBill {
         } catch (Exception e) {
             result = -1;
             // TODO 记录异常日志
-            Log.e(TAG, e.toString());
+            Logger.e(e.toString());
         }
         return result;
     }
@@ -102,7 +101,7 @@ public class UserInfoBill {
         } catch (RuntimeException e) {
             // TODO 添加日志
             count = -1;
-            Log.e(TAG, e.toString());
+            Logger.e(e.toString());
         }
         return count;
     }
@@ -116,7 +115,7 @@ public class UserInfoBill {
         try {
             models = userInfoDao.findAll();
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            Logger.e(e.toString());
         }
         return models;
     }
@@ -127,7 +126,7 @@ public class UserInfoBill {
             model = userInfoDao.findByCardCode(card_code);
         } catch (Exception e) {
             model = null;
-            Log.e(TAG, e.toString());
+            Logger.e(e.toString());
         }
         return model;
     }

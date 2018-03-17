@@ -1,12 +1,12 @@
 package com.gopher.meidcalcollection.common.db.dao;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import com.gopher.meidcalcollection.common.TotalApp;
 import com.gopher.meidcalcollection.common.db.DBConstant;
 import com.gopher.meidcalcollection.common.db.model.BaseDBModel;
 import com.gopher.meidcalcollection.common.db.model.TypeModel;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ import java.util.List;
  */
 
 public class TypeDao {
-    public static final String TAG = TypeDao.class.getSimpleName();
 
     /**
      * 向表中添加一个数据
@@ -41,7 +40,7 @@ public class TypeDao {
             TotalApp.getDataBase().setTransactionSuccessful();
         } catch (Exception e) {
             // TODO: handle exception
-            Log.e(TAG, e.toString());
+            Logger.e(e.toString());
         } finally {
             TotalApp.getDataBase().endTransaction();
         }
